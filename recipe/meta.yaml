@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "2.4.0" %}
+{% set version = "2.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 6c3c8e07a4574ed5f54275944596a9845c38a9ed6c7217dc8769ebf95340bee9
+  sha256: 014e2917f2b636c062325d59a4a0f068550bd3b119742be80e956456478ee2d6
   patches:
     - dftd4-build.patch
     - dftd4-openmp-gcc7.patch
