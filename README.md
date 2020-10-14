@@ -3,7 +3,7 @@ About dftd4
 
 Home: https://github.com/dftd4/dftd4
 
-Package license: LGPL-3.0
+Package license: LGPL-3.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/dftd4-feedstock/blob/master/LICENSE.txt)
 
