@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/{{ name }}/{{ name }}/archive/797a8c6fc5f5ed4d5a558694966dd3fa31028161.tar.gz
-  sha256: 246cb2c39ad011afaf198f8e7eb44195a3f484066721c9c8ea91421a54318ee3
+  url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
+  sha256: 6db4ee4c815dbafd5e2efb6f35259798a0b99057ec0e7c40f0cc5a91c094e08e
 
 build:
   number: 0
@@ -15,7 +15,7 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [osx]
+    - {{ compiler('c') }}
     - {{ compiler('fortran') }}
     - meson 0.55.*
     - ninja
