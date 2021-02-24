@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "2.5.0" %}
+{% set version = "3.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,21 +7,19 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 014e2917f2b636c062325d59a4a0f068550bd3b119742be80e956456478ee2d6
-  patches:
-    - dftd4-build.patch
-    - dftd4-openmp-gcc7.patch
+  sha256: 6db4ee4c815dbafd5e2efb6f35259798a0b99057ec0e7c40f0cc5a91c094e08e
 
 build:
-  number: 1
+  number: 0
   skip: True  # [win]
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [osx]
+    - {{ compiler('c') }}
     - {{ compiler('fortran') }}
-    - meson >=0.49
+    - meson 0.55.*
     - ninja
+    - asciidoctor
   host:
     - libblas
     - liblapack
