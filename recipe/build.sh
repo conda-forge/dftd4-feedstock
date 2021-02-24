@@ -4,11 +4,9 @@ set -ex
 meson_options=(
    "--prefix=${PREFIX}"
    "--libdir=lib"
-   "--buildtype"
-   "release"
-   "--warnlevel"
-   "0"
-   "-Dla_backend=netlib"
+   "--buildtype=release"
+   "--warnlevel=0"
+   "-Dlapack=netlib"
    ".."
 )
 
@@ -22,4 +20,4 @@ else
     meson "${meson_options[@]}"
 fi
 
-ninja install
+ninja test install
