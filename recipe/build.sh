@@ -2,9 +2,6 @@
 set -ex
 
 meson_options=(
-   "--prefix=${PREFIX}"
-   "--libdir=lib"
-   "--buildtype=release"
    "--warnlevel=0"
    "-Dlapack=netlib"
    ".."
@@ -15,9 +12,11 @@ pushd _build
 
 if [[ "$(uname)" = Darwin ]]; then
     # Hack around issue, see contents of fake-bin/cc1 for an explanation
-    PATH=${PATH}:${RECIPE_DIR}/fake-bin meson "${meson_options[@]}"
-else
-    meson "${meson_options[@]}"
+    export PATH=${PATH}:${RECIPE_DIR}/fake-bin
 fi
+meson $MESON_ARGS "${meson_options[@]}"
 
-ninja test install
+if [ $host_alias == $build_alias ]; then
+    ninja test
+fi
+ninja install
