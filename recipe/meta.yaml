@@ -31,11 +31,7 @@ requirements:
     - liblapack
 
 test:
-  requires:
-    - pkg-config
   commands:
-    - pkg-config {{ name }} --modversion
-    - pkg-config {{ name }} --exact-version {{ version }}
     - dftd4 --version
 
 about:
