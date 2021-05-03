@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "3.1.0" %}
+{% set version = "3.2.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: cba67cce1ebd194e844c582b3ebec250ba7d349894ee6e8052686e39c70131ce
+  sha256: 9874db9e2329519db258dd75ee7ce7c97947f975b00087ba5fdf9a28741088f1
 
 build:
   number: 0
@@ -20,6 +20,7 @@ requirements:
     - meson 0.55.*
     - ninja
     - asciidoctor
+    - pkg-config
   host:
     - libblas
     - liblapack
