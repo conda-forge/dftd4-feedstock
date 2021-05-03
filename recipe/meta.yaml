@@ -20,6 +20,7 @@ requirements:
     - meson 0.55.*
     - ninja
     - asciidoctor
+    - pkg-config
   host:
     - libblas
     - liblapack
@@ -33,6 +34,7 @@ test:
   requires:
     - pkg-config
   commands:
+    - pkg-config {{ name }} --modversion
     - pkg-config {{ name }} --exact-version {{ version }}
     - dftd4 --version
 
