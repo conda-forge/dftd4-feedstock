@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "3.2.0" %}
+{% set version = "3.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 9874db9e2329519db258dd75ee7ce7c97947f975b00087ba5fdf9a28741088f1
+  sha256: 60d4f30d97cae95a7b48a99e10848ef600b605f9da98c4893a6034bded1a7f24
 
 build:
   number: 0
-  skip: True  # [win]
+  skip: true  # [win]
 
 requirements:
   build:
@@ -39,9 +39,9 @@ about:
   license: LGPL-3.0-or-later
   license_family: LGPL
   license_file:
-    - "COPYING"
-    - "COPYING.LESSER"
-  summary: 'A generally applicable London dispersion correction'
+    - COPYING
+    - COPYING.LESSER
+  summary: A generally applicable London dispersion correction
   description: |
     This program implements the D4 London dispersion correction
     for molecular and 3D periodic systems.
