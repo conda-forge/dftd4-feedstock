@@ -2,22 +2,15 @@
 set -ex
 
 meson_options=(
-   "--prefix=${PREFIX}"
-   "--libdir=lib"
+   ${MESON_ARGS:---prefix=${PREFIX} --libdir=lib}
    "--buildtype=release"
    "--warnlevel=0"
    "-Dlapack=netlib"
-   ".."
 )
 
-mkdir -p _build
-pushd _build
-
-if [[ "$(uname)" = Darwin ]]; then
-    # Hack around issue, see contents of fake-bin/cc1 for an explanation
-    PATH=${PATH}:${RECIPE_DIR}/fake-bin meson "${meson_options[@]}"
-else
-    meson "${meson_options[@]}"
+meson setup _build "${meson_options[@]}"
+meson compile -C _build
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
+  meson test -C _build --print-errorlogs --num-processes 1 -t 5
 fi
-
-ninja test install
+meson install -C _build

@@ -10,32 +10,32 @@ source:
   sha256: 60d4f30d97cae95a7b48a99e10848ef600b605f9da98c4893a6034bded1a7f24
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('fortran') }}
-    - meson 0.55.*
+    - meson
     - ninja
     - asciidoctor
     - pkg-config
+    - llvm-openmp  # [osx]
+    - libgomp  # [linux]
   host:
     - libblas
     - liblapack
-    - llvm-openmp  # [osx]
-    - libgomp  # [linux and not aarch64]
+    - mctc-lib
   run:
-    - libblas
-    - liblapack
+    - mctc-lib
 
 test:
   commands:
     - dftd4 --version
 
 about:
-  home: https://github.com/{{ name }}/{{ name }}
+  home: https://github.com/dftd4/dftd4
   license: LGPL-3.0-or-later
   license_family: LGPL
   license_file:
@@ -45,7 +45,7 @@ about:
   description: |
     This program implements the D4 London dispersion correction
     for molecular and 3D periodic systems.
-  doc_url: https://{{ name }}.github.io/dftd4
+  doc_url: https://dftd4.github.io/dftd4
 
 extra:
   recipe-maintainers:
