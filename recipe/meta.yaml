@@ -13,14 +13,16 @@ source:
     - gcc5.patch  # [win]
 
 build:
-  number: 2
+  number: 3
   script:
     - set -ex  # [unix]
-    - meson setup _build ${MESON_ARGS:---prefix=${PREFIX} --libdir=lib} --buildtype=release -Dlapack=netlib  # [unix]
+    - mv $PREFIX/lib/pkgconfig/{lapack,blas}.pc $SRC_DIR  # [unix]
+    - meson setup _build ${MESON_ARGS:---prefix=${PREFIX} --libdir=lib} --buildtype=release -Dlapack=custom -Dcustom_libraries=lapack,blas  # [unix]
     - meson setup _build --prefix=%PREFIX% --buildtype=release --pkg-config-path=%PREFIX%\lib\pkgconfig -Dlapack=custom "-Dfortran_link_args=%LIBRARY_PREFIX%\lib\liblapack.dll.a %LIBRARY_PREFIX%\lib\libblas.dll.a"  # [win]
     - meson compile -C _build
     - meson test -C _build --no-rebuild --print-errorlogs  # [build_platform == target_platform]
     - meson install -C _build --no-rebuild
+    - mv $SRC_DIR/{lapack,blas}.pc $PREFIX/lib/pkgconfig  # [unix]
 
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
@@ -46,9 +48,13 @@ requirements:
     - mctc-lib
 
 test:
+  requires:
+    - pkg-config
   commands:
     - {{ name }} --version  # [build_platform == target_platform]
     - test -f $PREFIX/lib/lib{{ name }}$SHLIB_EXT  # [unix]
+    - set PKG_CONFIG_PATH=%PREFIX%\lib\pkgconfig  # [win]
+    - pkg-config {{ name }} --exact-version {{ version }}
 
 about:
   home: https://github.com/dftd4/dftd4
