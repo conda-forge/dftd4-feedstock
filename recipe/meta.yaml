@@ -8,18 +8,33 @@ package:
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: 60d4f30d97cae95a7b48a99e10848ef600b605f9da98c4893a6034bded1a7f24
+  patches:
+    - wrap.patch
+    - gcc5.patch  # [win]
 
 build:
-  number: 1
-  skip: true  # [win]
+  number: 2
+  script:
+    - set -ex  # [unix]
+    - meson setup _build ${MESON_ARGS:---prefix=${PREFIX} --libdir=lib} --buildtype=release -Dlapack=netlib  # [unix]
+    - meson setup _build --prefix=%PREFIX% --buildtype=release --pkg-config-path=%PREFIX%\lib\pkgconfig -Dlapack=custom "-Dfortran_link_args=%LIBRARY_PREFIX%\lib\liblapack.dll.a %LIBRARY_PREFIX%\lib\libblas.dll.a"  # [win]
+    - meson compile -C _build
+    - meson test -C _build --no-rebuild --print-errorlogs  # [build_platform == target_platform]
+    - meson install -C _build --no-rebuild
+
+  run_exports:
+    - {{ pin_subpackage(name, max_pin='x.x') }}
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}  # [unix]
+    - {{ compiler('fortran') }}  # [unix]
+    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ compiler('m2w64_fortran') }}  # [win]
     - meson
     - ninja
-    - asciidoctor
+    - cmake  # [win]
+    - asciidoctor  # [unix]
     - pkg-config
     - llvm-openmp  # [osx]
     - libgomp  # [linux]
@@ -32,7 +47,8 @@ requirements:
 
 test:
   commands:
-    - dftd4 --version
+    - {{ name }} --version  # [build_platform == target_platform]
+    - test -f $PREFIX/lib/lib{{ name }}$SHLIB_EXT  # [unix]
 
 about:
   home: https://github.com/dftd4/dftd4
