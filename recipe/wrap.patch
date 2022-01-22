@@ -1,0 +1,10 @@
+diff --git a/subprojects/mstore.wrap b/subprojects/mstore.wrap
+index ebee249..37e72cf 100644
+--- a/subprojects/mstore.wrap
++++ b/subprojects/mstore.wrap
+@@ -1,4 +1,4 @@
+ [wrap-git]
+ directory = mstore
+ url = https://github.com/grimme-lab/mstore
+-revision = v0.2.0
++revision = head
