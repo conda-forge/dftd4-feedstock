@@ -1,21 +1,21 @@
-diff --git a/app/main.f90 b/app/main.f90
-index 9bfac0e4..397c2a35 100644
---- a/app/main.f90
-+++ b/app/main.f90
-@@ -109,7 +109,7 @@ program main
-    if (config%mbdscale) s9 = inp%s9
+diff --git a/app/driver.f90 b/app/driver.f90
+index 628e6fb0..f96ab1b8 100644
+--- a/app/driver.f90
++++ b/app/driver.f90
+@@ -112,7 +112,7 @@ subroutine run_main(config, error)
+    if (config%mbdscale) s9 = config%inp%s9
     if (config%rational) then
        if (config%has_param) then
--         param = inp
-+         allocate(param, source=inp)
+-         param = config%inp
++         allocate(param, source=config%inp)
        else
-          call get_rational_damping(method, param, s9)
+          call get_rational_damping(config%method, param, s9)
           if (.not.allocated(param)) then
 diff --git a/src/dftd4/param.f90 b/src/dftd4/param.f90
-index de5bae24..c1b50fe9 100644
+index c87dec0e..dfe7b1b8 100644
 --- a/src/dftd4/param.f90
 +++ b/src/dftd4/param.f90
-@@ -93,20 +93,20 @@ subroutine get_d4eeq_bj_parameter(dfnum, param, s9)
+@@ -94,20 +94,20 @@ subroutine get_d4eeq_bj_parameter(dfnum, param, s9)
     real(wp), intent(in), optional :: s9
     select case(dfnum)
     case(p_dftb_3ob)
@@ -46,7 +46,7 @@ index de5bae24..c1b50fe9 100644
     end select
  
  contains
-@@ -130,357 +130,357 @@ subroutine get_d4eeq_bjatm_parameter(dfnum, param, s9)
+@@ -131,390 +131,390 @@ subroutine get_d4eeq_bjatm_parameter(dfnum, param, s9)
     real(wp), intent(in), optional :: s9
     select case(dfnum)
     case(p_b1b95)
@@ -276,6 +276,12 @@ index de5bae24..c1b50fe9 100644
 +      allocate(param, source=dftd_param ( & ! (SAW190103)
 +         &  s6=1.0000_wp, s8=0.59493760_wp, a1=0.71422359_wp, a2=6.35314182_wp ))
        !  Fitset: MD= 0.08395 MAD= 0.24888 RMSD= 0.34879
+    case(p_mn12sx)
+-      param = dftd_param ( & ! (SAW211021)
+-         &  s6=1.0000_wp, s8=0.85964873_wp, a1=0.62662681_wp, a2=5.62088906_wp )
++      allocate(param, source=dftd_param ( & ! (SAW211021)
++         &  s6=1.0000_wp, s8=0.85964873_wp, a1=0.62662681_wp, a2=5.62088906_wp ))
+       !  Fitset: MD= 0.16131 MAD= 0.34142 RMSD= 0.47113
     case(p_mpw1b95)
 -      param = dftd_param ( & ! (SAW190107)
 -         &  s6=1.0000_wp, s8=0.50093024_wp, a1=0.41585097_wp, a2=4.99154869_wp )
@@ -360,6 +366,18 @@ index de5bae24..c1b50fe9 100644
 +      allocate(param, source=dftd_param ( & ! (SAW190103)
 +         &  s6=1.0000_wp, s8=0.95948085_wp, a1=0.38574991_wp, a2=4.80688534_wp ))
        !  Fitset: MD= -0.20544 MAD= 0.33635 RMSD= 0.51168
+    case(p_pbesol)
+-      param = dftd_param ( & ! (SAW211021)
+-         &  s6=1.0000_wp, s8=1.71885698_wp, a1=0.47901421_wp, a2=5.96771589_wp )
++      allocate(param, source=dftd_param ( & ! (SAW211021)
++         &  s6=1.0000_wp, s8=1.71885698_wp, a1=0.47901421_wp, a2=5.96771589_wp ))
+       !  Fitset: MD= -0.28899 MAD= 0.52215 RMSD= 0.93584
+    case(p_am05)
+-      param = dftd_param ( & ! (SAW211021)
+-         &  s6=1.0000_wp, s8=1.71885838_wp, a1=0.47901431_wp, a2=5.96771581_wp )
++      allocate(param, source=dftd_param ( & ! (SAW211021)
++         &  s6=1.0000_wp, s8=1.71885838_wp, a1=0.47901431_wp, a2=5.96771581_wp ))
+       !  Fitset: MD= -0.28899 MAD= 0.52215 RMSD= 0.93584
     case(p_pw1pw)
 -      param = dftd_param ( & ! (SAW190103)
 -         &  s6=1.0000_wp, s8=0.96850170_wp, a1=0.42427511_wp, a2=5.02060636_wp )
@@ -472,6 +490,15 @@ index de5bae24..c1b50fe9 100644
 -         &  s6=1.0000_wp, s8=0.60187490_wp, a1=0.51559235_wp, a2=5.77342911_wp )
 +      allocate(param, source=dftd_param ( & ! (10.1063/5.0041008)
 +         &  s6=1.0000_wp, s8=0.60187490_wp, a1=0.51559235_wp, a2=5.77342911_wp ))
+    case(p_r2scanh)
+-      param = dftd_param (s6=1.0_wp, s8=0.8324_wp, a1=0.4944_wp, a2=5.9019_wp)
++      allocate(param, source=dftd_param (s6=1.0_wp, s8=0.8324_wp, a1=0.4944_wp, a2=5.9019_wp))
+    case(p_r2scan0)
+-      param = dftd_param (s6=1.0_wp, s8=0.8992_wp, a1=0.4778_wp, a2=5.8779_wp)
++      allocate(param, source=dftd_param (s6=1.0_wp, s8=0.8992_wp, a1=0.4778_wp, a2=5.8779_wp))
+    case(p_r2scan50)
+-      param = dftd_param (s6=1.0_wp, s8=1.0471_wp, a1=0.4574_wp, a2=5.8969_wp)
++      allocate(param, source=dftd_param (s6=1.0_wp, s8=1.0471_wp, a1=0.4574_wp, a2=5.8969_wp))
     case(p_tpss0)
 -      param = dftd_param ( & ! (SAW190103)
 -         &  s6=1.0000_wp, s8=1.62438102_wp, a1=0.40329022_wp, a2=4.80537871_wp )
@@ -581,6 +608,41 @@ index de5bae24..c1b50fe9 100644
 -         &  s6=1.0_wp, s8=2.1667394_wp, a1=0.5646391_wp, a2=4.9576353_wp)
 +      allocate(param, source=dftd_param( & ! (SAW191202)
 +         &  s6=1.0_wp, s8=2.1667394_wp, a1=0.5646391_wp, a2=4.9576353_wp))
+    case(p_hse03)
+-      param = dftd_param( & ! (SAW211107)
+-         &  s6=1.0_wp, s8=1.19812280_wp, a1=0.38662939_wp, a2=5.22925796_wp)
++      allocate(param, source=dftd_param( & ! (SAW211107)
++         &  s6=1.0_wp, s8=1.19812280_wp, a1=0.38662939_wp, a2=5.22925796_wp))
+    case(p_hse06)
+-      param = dftd_param( & ! (SAW211107)
+-         &  s6=1.0_wp, s8=1.19528249_wp, a1=0.38663183_wp, a2=5.19133469_wp)
++      allocate(param, source=dftd_param( & ! (SAW211107)
++         &  s6=1.0_wp, s8=1.19528249_wp, a1=0.38663183_wp, a2=5.19133469_wp))
+    case(p_hse12)
+-      param = dftd_param( & ! (SAW211107)
+-         &  s6=1.0_wp, s8=1.23500792_wp, a1=0.39226921_wp, a2=5.22036266_wp)
++      allocate(param, source=dftd_param( & ! (SAW211107)
++         &  s6=1.0_wp, s8=1.23500792_wp, a1=0.39226921_wp, a2=5.22036266_wp))
+    case(p_hse12s)
+-      param = dftd_param( & ! (SAW211107)
+-         &  s6=1.0_wp, s8=1.23767762_wp, a1=0.39989137_wp, a2=5.34809245_wp)
++      allocate(param, source=dftd_param( & ! (SAW211107)
++         &  s6=1.0_wp, s8=1.23767762_wp, a1=0.39989137_wp, a2=5.34809245_wp))
+    case(p_hsesol)
+-      param = dftd_param( & ! (SAW211107)
+-         &  s6=1.0_wp, s8=1.82207807_wp, a1=0.45646268_wp, a2=5.59662251_wp)
++      allocate(param, source=dftd_param( & ! (SAW211107)
++         &  s6=1.0_wp, s8=1.82207807_wp, a1=0.45646268_wp, a2=5.59662251_wp))
     end select
  
  contains
+diff --git a/subprojects/mstore.wrap b/subprojects/mstore.wrap
+index acf5df9d..6f620815 100644
+--- a/subprojects/mstore.wrap
++++ b/subprojects/mstore.wrap
+@@ -1,4 +1,4 @@
+ [wrap-git]
+ directory = mstore
+ url = https://github.com/grimme-lab/mstore
+-revision = v0.2.0
++revision = backport
