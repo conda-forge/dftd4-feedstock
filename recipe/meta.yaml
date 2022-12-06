@@ -8,25 +8,10 @@ package:
 source:
   url: https://github.com/dftd4/dftd4/archive/refs/tags/v{{ version }}.tar.gz
   sha256: f3b0a16a952817ae48e819626e13676fba3b61c8beea47b0f8ada2fbb679fb7b
-  patches:
-    - gcc5.patch  # [win]
 
 build:
-  number: 0
-  script:
-    - set -ex  # [unix]
-    - mv $PREFIX/lib/pkgconfig/{lapack,blas}.pc $SRC_DIR  # [unix]
-    - >
-       meson setup _build
-       ${MESON_ARGS:---prefix=${PREFIX} --libdir=lib}  # [unix]
-       --prefix=%LIBRARY_PREFIX% --pkg-config-path=%PREFIX%\lib\pkgconfig  # [win]
-       --buildtype=release -Dlapack=custom
-       -Dcustom_libraries=lapack,blas  # [unix]
-       "-Dfortran_link_args=%LIBRARY_PREFIX%\lib\liblapack.dll.a %LIBRARY_PREFIX%\lib\libblas.dll.a"  # [win]
-    - meson compile -C _build
-    - meson test -C _build --no-rebuild --print-errorlogs  # [build_platform == target_platform]
-    - meson install -C _build --no-rebuild
-    - mv $SRC_DIR/{lapack,blas}.pc $PREFIX/lib/pkgconfig  # [unix]
+  number: 1
+  skip: true  # [win]
 
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
