@@ -12,7 +12,7 @@ source:
     - gcc5.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   script:
     - set -ex  # [unix]
     - mv $PREFIX/lib/pkgconfig/{lapack,blas}.pc $SRC_DIR  # [unix]
