@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "3.5.0" %}
+{% set version = "3.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}-source.tar.xz
-  sha256: d2bab992b5ef999fd13fec8eb1da9e9e8d94b8727a2e624d176086197a00a46f
+  sha256: 56b3b4650853a34347d3d56c93d7596ecbe2208c4a14dbd027959fd4a009679d
 
 build:
   number: 0
@@ -54,7 +54,7 @@ about:
   description: |
     This program implements the D4 London dispersion correction
     for molecular and 3D periodic systems.
-  doc_url: https://dftd4.github.io/dftd4
+  doc_url: https://dftd4.readthedocs.io
 
 extra:
   recipe-maintainers:
