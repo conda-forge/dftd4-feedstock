@@ -1,15 +1,15 @@
-About dftd4
-===========
+About dftd4-feedstock
+=====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/dftd4-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/dftd4/dftd4
 
 Package license: LGPL-3.0-or-later
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/dftd4-feedstock/blob/main/LICENSE.txt)
-
 Summary: A generally applicable London dispersion correction
 
-Documentation: https://dftd4.github.io/dftd4
+Documentation: https://dftd4.readthedocs.io
 
 This program implements the D4 London dispersion correction
 for molecular and 3D periodic systems.
