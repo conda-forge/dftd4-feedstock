@@ -16,7 +16,7 @@ fi
 
 meson setup _build \
   ${MESON_ARGS} \
-  --buildtype=release -Dlapack=custom \
+  -Dlapack=custom \
   -Dcustom_libraries=lapack,blas
 
 meson compile -C _build

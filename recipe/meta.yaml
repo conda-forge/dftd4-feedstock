@@ -1,13 +1,13 @@
 {% set name = "dftd4" %}
-{% set version = "3.6.0" %}
+{% set version = "3.7.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}-source.tar.xz
-  sha256: 56b3b4650853a34347d3d56c93d7596ecbe2208c4a14dbd027959fd4a009679d
+  url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}.tar.xz
+  sha256: 4e8749df6852bf863d5d1831780a2d30e9ac4afcfebbbfe5f6a6a73d06d6c6ee
 
 build:
   number: 0
@@ -18,8 +18,10 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}  # [unix]
     - {{ compiler('c') }}  # [unix]
     - {{ compiler('fortran') }}  # [unix]
+    - {{ stdlib('m2w64_c') }}  # [win]
     - {{ compiler('m2w64_c') }}  # [win]
     - {{ compiler('m2w64_fortran') }}  # [win]
     - meson
