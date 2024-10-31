@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 set PKG_CONFIG_PATH=%LIBRARY_PREFIX%\lib\pkgconfig;%LIBRARY_PREFIX%\share\pkgconfig
 set "MESON_RSP_THRESHOLD=320000"
 
-meson setup _build -Dprefix=%LIBRARY_PREFIX% -Dbuildtype=release -Dlapack=custom -Dcustom_libraries='' -Dfortran_link_args='-llapack -lblas'
+meson setup _build -Dprefix=%LIBRARY_PREFIX% -Dbuildtype=release -Ddefault_library=shared -Dlapack=custom -Dcustom_libraries="-L%LIBRARY_PREFIX%\bin,lapack,blas"
 if %ERRORLEVEL% neq 0 exit 1
 
 meson compile -C _build
