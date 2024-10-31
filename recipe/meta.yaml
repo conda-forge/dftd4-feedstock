@@ -34,6 +34,7 @@ requirements:
     - libblas
     - liblapack
     - mctc-lib
+    - pkg-config
 
 test:
   requires:
