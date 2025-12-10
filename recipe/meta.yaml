@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}-source.tar.xz
   sha256: 401e49893d98a1da82896998a6345b62f709683cbb19d9cbbe10564b9fc353e4
-  patches:
-    - find-lib.patch
 
 build:
   number: 0
