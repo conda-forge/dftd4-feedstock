@@ -45,7 +45,7 @@ test:
     - test -f $PREFIX/lib/lib{{ name }}$SHLIB_EXT  # [unix]
     - test -f $PREFIX/include/{{ name }}.h  # [unix]
     - pkg-config {{ name }} --exact-version {{ version }}
-    - if not exist %LIBRARY_BIN%\\lib{{ name }}-3.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\lib{{ name }}-4.dll exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\\include\\{{ name }}.h exit 1  # [win]
 
 about:
