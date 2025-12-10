@@ -1,18 +1,16 @@
 {% set name = "dftd4" %}
-{% set version = "3.7.0" %}
+{% set version = "4.0.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}.tar.xz
-  sha256: 4e8749df6852bf863d5d1831780a2d30e9ac4afcfebbbfe5f6a6a73d06d6c6ee
-  patches:
-    - find-lib.patch
+  url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}-source.tar.xz
+  sha256: 401e49893d98a1da82896998a6345b62f709683cbb19d9cbbe10564b9fc353e4
 
 build:
-  number: 4
+  number: 0
 
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
@@ -47,7 +45,7 @@ test:
     - test -f $PREFIX/lib/lib{{ name }}$SHLIB_EXT  # [unix]
     - test -f $PREFIX/include/{{ name }}.h  # [unix]
     - pkg-config {{ name }} --exact-version {{ version }}
-    - if not exist %LIBRARY_BIN%\\lib{{ name }}-3.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\lib{{ name }}-4.dll exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\\include\\{{ name }}.h exit 1  # [win]
 
 about:
