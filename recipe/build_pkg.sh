@@ -16,6 +16,7 @@ fi
 
 meson setup _build \
   ${MESON_ARGS} \
+  -Ddefault_library=shared \
   -Dlapack=custom \
   -Dcustom_libraries=lapack,blas
 
