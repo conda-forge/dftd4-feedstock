@@ -20,6 +20,8 @@ libblas:
 - 3.9.* *netlib
 liblapack:
 - 3.9.* *netlib
+module_abi:
+- gfortran
 target_platform:
 - linux-ppc64le
 zip_keys:

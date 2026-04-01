@@ -88,6 +88,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-dftd4-green.svg)](https://anaconda.org/conda-forge/dftd4) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dftd4.svg)](https://anaconda.org/conda-forge/dftd4) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dftd4.svg)](https://anaconda.org/conda-forge/dftd4) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dftd4.svg)](https://anaconda.org/conda-forge/dftd4) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-dftd4--devel-green.svg)](https://anaconda.org/conda-forge/dftd4-devel) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dftd4-devel.svg)](https://anaconda.org/conda-forge/dftd4-devel) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dftd4-devel.svg)](https://anaconda.org/conda-forge/dftd4-devel) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dftd4-devel.svg)](https://anaconda.org/conda-forge/dftd4-devel) |
 
 Installing dftd4
 ================
@@ -99,16 +100,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `dftd4` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `dftd4, dftd4-devel` can be installed with `conda`:
 
 ```
-conda install dftd4
+conda install dftd4 dftd4-devel
 ```
 
 or with `mamba`:
 
 ```
-mamba install dftd4
+mamba install dftd4 dftd4-devel
 ```
 
 It is possible to list all of the versions of `dftd4` available on your platform with `conda`:

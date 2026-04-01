@@ -18,5 +18,7 @@ m2w64_fortran_compiler:
 - gfortran
 m2w64_fortran_compiler_version:
 - '14'
+module_abi:
+- gfortran
 target_platform:
 - win-64
