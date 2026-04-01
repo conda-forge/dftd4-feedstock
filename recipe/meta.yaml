@@ -2,7 +2,7 @@
 {% set version = "4.1.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}-pkg
   version: {{ version }}
 
 source:
@@ -10,32 +10,7 @@ source:
   sha256: a61bc0c8e8a7db5302ef4f4f1ebc834bb9dcf2896b0e2af746f25a0d4177d8d0
 
 build:
-  number: 0
-
-  run_exports:
-    - {{ pin_subpackage(name, max_pin='x.x') }}
-
-requirements:
-  build:
-    - {{ stdlib('c') }}  # [unix]
-    - {{ compiler('c') }}  # [unix]
-    - {{ compiler('fortran') }}  # [unix]
-    - {{ stdlib('m2w64_c') }}  # [win]
-    - {{ compiler('m2w64_c') }}  # [win]
-    - {{ compiler('m2w64_fortran') }}  # [win]
-    - meson
-    - ninja
-    - cmake  # [win]
-    - asciidoctor  # [unix]
-    - pkg-config
-    - llvm-openmp  # [osx]
-    - libgomp  # [linux]
-  host:
-    - libblas
-    - liblapack
-    - mctc-lib
-    - multicharge
-    - pkg-config
+  number: 1
 
 test:
   requires:
@@ -47,6 +22,71 @@ test:
     - pkg-config {{ name }} --exact-version {{ version }}
     - if not exist %LIBRARY_BIN%\\lib{{ name }}-4.dll exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\\include\\{{ name }}.h exit 1  # [win]
+
+outputs:
+  - name: {{ name }}
+    script: build_pkg.sh   # [unix]
+    script: build_pkg.bat  # [win]
+    build:
+      string: {{ module_abi }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
+      run_exports:
+        - {{ pin_subpackage(name, max_pin='x.x') }}
+
+    requirements:
+      build:
+        - {{ stdlib('c') }}  # [unix]
+        - {{ stdlib('m2w64_c') }}  # [win]
+        - {{ compiler('c') }}  # [unix]
+        - {{ compiler('fortran') }}  # [unix]
+        - {{ compiler('m2w64_c') }}  # [win]
+        - {{ compiler('m2w64_fortran') }}  # [win]
+        - meson
+        - ninja
+        - pkg-config
+        - llvm-openmp  # [osx]
+      host:
+        - libblas
+        - liblapack
+        - mctc-lib-devel * {{ module_abi }}_*
+        - multicharge-devel * {{ module_abi }}_*
+        - libgomp  # [linux]
+        - llvm-openmp  # [osx]
+      run:
+        - llvm-openmp  # [osx]
+
+    test:
+      requires:
+        - pkg-config
+      commands:
+        - {{ name }} --version  # [build_platform == target_platform]
+        - test -f $PREFIX/lib/lib{{ name }}$SHLIB_EXT  # [unix]
+        - test -f $PREFIX/include/{{ name }}.h  # [unix]
+        - test ! -f $PREFIX/lib/lib{{ name }}.a  # [unix]
+        - pkg-config {{ name }} --exact-version {{ version }}
+        - if not exist %LIBRARY_BIN%\\lib{{ name }}-4.dll exit 1  # [win]
+        - if not exist %LIBRARY_PREFIX%\\include\\{{ name }}.h exit 1  # [win]
+
+  - name: {{ name }}-devel
+    build:
+      string: {{ module_abi }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
+      run_exports:
+        - {{ pin_subpackage(name, max_pin='x.x') }} {{ module_abi }}_*
+
+    requirements:
+      run:
+        - {{ pin_subpackage(name, max_pin='x.x') }} {{ module_abi }}_*
+
+    test:
+      requires:
+        - pkg-config
+      commands:
+        - {{ name }} --version  # [build_platform == target_platform]
+        - test -f $PREFIX/lib/lib{{ name }}$SHLIB_EXT  # [unix]
+        - test -f $PREFIX/include/{{ name }}.h  # [unix]
+        - test ! -f $PREFIX/lib/lib{{ name }}.a  # [unix]
+        - pkg-config {{ name }} --exact-version {{ version }}
+        - if not exist %LIBRARY_BIN%\\lib{{ name }}-4.dll exit 1  # [win]
+        - if not exist %LIBRARY_PREFIX%\\include\\{{ name }}.h exit 1  # [win]
 
 about:
   home: https://github.com/dftd4/dftd4
@@ -65,3 +105,4 @@ extra:
   recipe-maintainers:
     - awvwgk
     - marvinfriede
+  feedstock-name: {{ name }}

@@ -26,6 +26,8 @@ llvm_openmp:
 - '19'
 macos_machine:
 - x86_64-apple-darwin13.4.0
+module_abi:
+- gfortran
 target_platform:
 - osx-64
 zip_keys:
