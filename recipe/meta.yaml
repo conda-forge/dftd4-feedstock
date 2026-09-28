@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "4.2.0" %}
+{% set version = "4.3.0" %}
 
 package:
   name: {{ name }}-pkg
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/dftd4/dftd4/releases/download/v{{ version }}/dftd4-{{ version }}.tar.xz
-  sha256: 467e024071510ad82b862c66c383c2ebc164fc1140e15dfc79f48d2f999fd184
+  sha256: e94c5d021c0a4b4aa9b5587e36fda2f398271dc2dc1abfbe097fdb04022bef35
 
 build:
-  number: 1
+  number: 0
 
 test:
   requires:
